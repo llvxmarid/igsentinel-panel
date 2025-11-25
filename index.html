@@ -52,6 +52,34 @@ function upload(){
     alert("Bu, online panelin temel versiyonu. API bağlanınca OCR + Fraud aktif olacak.");
 }
 </script>
+<script>
+    // 1) Buraya kendi API URL'in gelecek
+    const API_URL = "https://igsentinel-api.vercel.app";
 
+    // 2) Fotoğraf analiz fonksiyonu
+    async function yuklemek() {
+        const fileInput = document.getElementById("dosyaGirişi");
+        if (!fileInput.files.length) {
+            alert("Lütfen bir dosya seç");
+            return;
+        }
+
+        const formData = new FormData();
+        formData.append("file", fileInput.files[0]);
+
+        try {
+            const req = await fetch(`${API_URL}/ocr`, {
+                method: "POST",
+                body: formData
+            });
+
+            const res = await req.json();
+            alert("OCR Sonucu:\n\n" + res.extracted_text);
+
+        } catch (e) {
+            alert("API ile bağlantı kurulamadı!");
+        }
+    }
+</script>
 </body>
 </html>
