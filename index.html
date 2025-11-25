@@ -80,6 +80,36 @@ function upload(){
             alert("API ile bağlantı kurulamadı!");
         }
     }
+    <script>
+    // API adresin (seninki zaten bu)
+    const API_URL = "https://igsentinel-api.vercel.app";
+
+    async function yuklemek() {
+        const fileInput = document.getElementById("dosyaGirişi");
+
+        if (!fileInput.files.length) {
+            alert("Lütfen bir dosya seç");
+            return;
+        }
+
+        const formData = new FormData();
+        formData.append("file", fileInput.files[0]);
+
+        try {
+            const response = await fetch(`${API_URL}/ocr`, {
+                method: "POST",
+                body: formData
+            });
+
+            const result = await response.json();
+
+            alert("OCR Sonucu:\n\n" + result.extracted_text);
+
+        } catch (error) {
+            alert("API bağlantısı kurulamadı!");
+        }
+    }
+</script>
 </script>
 </body>
 </html>
