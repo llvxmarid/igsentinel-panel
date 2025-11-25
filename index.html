@@ -44,51 +44,18 @@ input{
 <div class="box">
     <h2>Dekont Analiz</h2>
     <input type="file" id="fileInput">
-    <button onclick="upload()">Analiz Et</button>
+    <button onclick="analyze()">Analiz Et</button>
 </div>
 
 <script>
-function upload(){
-    alert("Bu, online panelin temel versiyonu. API bağlanınca OCR + Fraud aktif olacak.");
-}
-</script>
-<script>
-    // 1) Buraya kendi API URL'in gelecek
+    // API adresin
     const API_URL = "https://igsentinel-api.vercel.app";
 
-    // 2) Fotoğraf analiz fonksiyonu
-    async function yuklemek() {
-        const fileInput = document.getElementById("dosyaGirişi");
-        if (!fileInput.files.length) {
-            alert("Lütfen bir dosya seç");
-            return;
-        }
-
-        const formData = new FormData();
-        formData.append("file", fileInput.files[0]);
-
-        try {
-            const req = await fetch(`${API_URL}/ocr`, {
-                method: "POST",
-                body: formData
-            });
-
-            const res = await req.json();
-            alert("OCR Sonucu:\n\n" + res.extracted_text);
-
-        } catch (e) {
-            alert("API ile bağlantı kurulamadı!");
-        }
-    }
-    <script>
-    // API adresin (seninki zaten bu)
-    const API_URL = "https://igsentinel-api.vercel.app";
-
-    async function yuklemek() {
-        const fileInput = document.getElementById("dosyaGirişi");
+    async function analyze() {
+        const fileInput = document.getElementById("fileInput");
 
         if (!fileInput.files.length) {
-            alert("Lütfen bir dosya seç");
+            alert("Lütfen bir dosya seçin!");
             return;
         }
 
@@ -103,6 +70,7 @@ function upload(){
 
             const result = await response.json();
 
+            // OCR sonucu göster
             alert("OCR Sonucu:\n\n" + result.extracted_text);
 
         } catch (error) {
@@ -110,6 +78,6 @@ function upload(){
         }
     }
 </script>
-</script>
+
 </body>
 </html>
